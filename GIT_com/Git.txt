@@ -1,0 +1,64 @@
+git config --global user.name "GRust"
+git config --global user.email "grustmg2016@gmail.com"
+
+# Генерация ключа (на новом компьютере)
+ssh-keygen -t ed25519 -C "grustmg2016@gmail.com"
+# Добавить ключ в агент
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+
+# Скопировать публичный ключ и добавить на GitHub:
+# Settings → SSH and GPG keys → New SSH key
+cat ~/.ssh/id_ed25519.pub
+
+
+
+
+
+# 1. Проверьте, видит ли Git вообще какие-либо изменения
+git status
+
+# 2. Посмотрите, нет ли файла .gitignore, который блокирует папки
+cat .gitignore
+
+# 3. Проверьте, какие файлы реально отслеживаются
+git ls-files
+
+# 4. Если есть конкретная папка, которая не добавляется — проверьте её статус
+git status путь/к/папке/
+2222222222222222222222222222222222222222222222222222222222222222222222222222
+# 1. Очистить индекс и пересканировать всё (безопасно, не удалит файлы)
+git rm -r --cached .
+
+# 2. Добавить всё заново
+git add -A
+
+# 3. Посмотреть, что теперь видит Git
+git status
+
+# 4. Если файлы появились — закоммитить
+git commit -m "fix: re-add all project files"
+git push origin main
+
+333333333333333333333333333333333333333333333333333
+# 1. Что Git "готов" добавить (сухой прогон, без реальных изменений)
+git add -n -A
+
+# 2. Есть ли вложенные репозитории внутри папок?
+find . -name ".git" -not -path "./.git"
+
+# 3. Что именно блокирует файлы?
+git ls-files --others --exclude-standard
+
+# 4. Сколько файлов реально лежит на диске?
+find . -type f -not -path "./.git/*" | wc -l
+
+444444444444444444444444444444444444444444444444444
+touch backend/.gitkeep
+touch backups/.gitkeep
+touch firmware/.gitkeep
+touch hardware/.gitkeep
+
+git add -A
+git commit -m "add: пустые папки проекта"
+git push origin main
